@@ -1,46 +1,64 @@
 const path = require('path');
 const model = require('./model');
 
-const AWS = require('aws-sdk');
-AWS.config.loadFromPath(
-    path.join(__dirname, 'config', 'awsConfig.json')
-  );
+const salt = require(path.join(__dirname, 'config', 'db.json'))
+ .salt
+
+const hashing = require(path.join(__dirname, 'config', 'hashing.js'))
 
   module.exports = {
     needs: () => upload,
     api : {
-        getData : (req, res) => {
-            model.api.getData( data => {
-                return res.send( data )
-            })
+        sendPw : (req, res) => {
+          const body = req.body;
+          const hash = hashing.enc(body.id, body.password, salt)
+          
+          model.api.searchInfo(body, hash, result => {
+            var obj = {};
+            if(result[0]) {
+                obj['suc'] = true;
+                obj['msg'] = '로그인 성공';
+
+              } else {
+                obj['suc'] = false;
+                obj['msg'] = '로그인 실패';
+              }
+              
+              res.send(obj);
+          })
         },
+    },
 
-        addData : (req, res) => {
-            let body = req.body
+    add : {
+      board : (req, res) => {
+        const body = req.body;
 
-            model.api.addData( body, data => {
-                return res.send(true)
-            })
-        },
+        model.add.board(body, result => {
+          if(result) {
+            res.send(true);
+          }
+        })
+      }
+    },
 
-        modifyData : (req, res) => {
-            let body = req.body
+    get : {
+      board : (req, res) => {
+        const body = req.body;
+        
+        model.get.board(body, result => {
+          if(result) {
+            res.send(result);
+          }
+        })
+      },
 
-            model.api.modifyData(body, data => {
-                return res.send(true)
-            })
-        },
+      board_cnt : (req, res) => {
 
-        deleteData : (req, res) => {
-            let body = req.body
-
-            model.api.deleteData(body, data => {
-                return res.send(true)
-            })
-        },
-
-        test : (req, res) => {
-            return res.send('test')
-        }
+        model.get.board_cnt(cnt => {
+          const result = { cnt : cnt }
+          res.send(result)
+        })
+      }
     }
+    
   }

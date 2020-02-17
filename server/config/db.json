@@ -1,10 +1,12 @@
 {
     "development" : {
-        "username": "RDS 마스터 이름",
-        "password": "RDS 비밀번호",
+        "username": "DB 유저 네임",
+        "password": "DB 비밀번호",
         "database": "DB 이름",
-        "host": "RDS 엔드 포인트",
-        "port": "RDS 포트번호",
+        "host": "DB HOST 이름",
+        "port": "DB PORT 번호",
         "dialect": "DB 종류"
-    }
+    },
+
+    "salt" : "솔트 설정"
 }

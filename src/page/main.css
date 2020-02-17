@@ -1,0 +1,100 @@
+.Mains {
+    display: grid;
+    grid-template-columns: 19% 62% 19%;
+}
+
+#Mains-left { border-right: solid 1px #aabbaa; }
+#Mains-right { border-left: solid 1px #aabbaa; }
+
+.Write {
+    padding: 20px;
+    padding-left: 30px;
+}
+
+.Write div {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+#title_txt {
+    width: 91%;
+    padding-bottom: 30px;
+    border: none;
+    font-size: 22px;
+    border-bottom: solid 1px #ababab;
+    font-weight: bold;
+}
+
+#content_txt {
+    width: 91%;
+    resize: none;
+    border: none;
+    height: 500px
+}
+
+#content_txt:focus { outline : none; }
+#title_txt:focus { outline : none; }
+
+#post_submit {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#post_submit button {
+    width: 120px;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px #ababab;
+    cursor: pointer;
+    background-color: white;
+}
+
+.Home {
+    padding: 15px;
+}
+
+.List {
+    padding: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+    min-height: 500px;
+}
+
+.list_tit {
+    border-bottom: solid 1px #ababab;
+    color : #ababab;
+    padding-bottom: 10px;
+}
+
+.list_grid {
+    display: grid;
+    grid-template-columns: 70% 15% 15%;
+}
+
+.list_data {
+    line-height: 40px;
+}
+
+.acenter {
+    text-align: center;
+}
+
+.paging_div {
+    margin-top: 10px;
+    border-top: solid 1px #ababab;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    text-align: center;
+}
+
+.paging_div div {
+    padding : 15px;
+    text-align: center;
+}
+
+.page_num {
+    margin-right: 20px;
+    list-style: none;
+    display : inline-block;
+    cursor: pointer;
+}
