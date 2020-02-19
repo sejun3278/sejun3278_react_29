@@ -53,8 +53,9 @@ const hashing = require(path.join(__dirname, 'config', 'hashing.js'))
       },
 
       board_cnt : (req, res) => {
+        const body = req.body;
 
-        model.get.board_cnt(cnt => {
+        model.get.board_cnt(body, cnt => {
           const result = { cnt : cnt }
           res.send(result)
         })

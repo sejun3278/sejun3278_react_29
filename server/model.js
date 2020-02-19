@@ -46,12 +46,25 @@ module.exports = {
 
     get : {
         board : (body, callback) => {
+            let search = "%%";
+
+            if(body.search) {
+                search = '%' + body.search + '%';
+            }
             
             Board.findAll({
-                limit : (body.page * body.limit),
-                offset : (body.page - 1) * body.limit,
-                order: sequelize.literal('board_id DESC')
-            })
+                where : {
+                    title : {
+                        [Op.like] : search
+                    },
+                    contents : {
+                        [Op.like] : search
+                    }
+                },
+                    limit : (body.page * body.limit),
+                    offset : (body.page - 1) * body.limit,
+                    order: sequelize.literal('board_id DESC')
+                })
             .then(data => {
                 callback(data)
             })
@@ -60,8 +73,27 @@ module.exports = {
             })
         },
 
-        board_cnt : (callback) => {
-            Board.count()
+        board_cnt : (body, callback) => {
+            let search = "%%";
+
+            if(body.search) {
+                search = '%' + body.search + '%';
+            }
+    
+            Board.count({
+                where : {
+
+                    title : {
+
+                        [Op.like] : search
+                        
+                    },
+
+                    contents : {
+                        [Op.like] : search
+                    }
+                }
+            })
             .then(result => {
                 callback(result);
             })

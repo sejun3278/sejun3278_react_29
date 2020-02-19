@@ -71,7 +71,6 @@ class header extends Component {
       })
 
       if(res.data) {
-        console.log(res.data.msg);
 
         if(res.data.suc) {
           sessionStorage.setItem('login', true)
@@ -93,6 +92,12 @@ class header extends Component {
     }
   }
 
+  _goHead = function() {
+    sessionStorage.removeItem('page')
+
+    return window.location.href = '/';
+  }
+
   render() {
     return (
         <div className='header_grid'>
@@ -106,7 +111,7 @@ class header extends Component {
 
             <div className='acenter'>
                 <Route path='/'/>
-                <h3> <Link className='link_tit' to='/'> Sejun's Blog </Link> </h3>
+                <h3 onClick={() => this._goHead()}> <Link className='link_tit' to='/'> Sejun's Blog </Link> </h3>
             </div>
 
             <div className='acenter'> 

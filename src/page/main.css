@@ -98,3 +98,22 @@
     display : inline-block;
     cursor: pointer;
 }
+
+.search_input {
+    padding: 2px;
+    margin-right: 5px;
+    margin-top: 15px;
+    width: 50%;
+}
+
+.serach_submit {
+    position: absolute;
+    margin-top: 14px;
+    cursor: pointer;
+}
+
+.not_data {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #ababab;
+}

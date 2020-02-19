@@ -21,6 +21,7 @@ class main extends Component {
 
           <div>
             <Switch>
+              <Route path='/:data' component={List} />
               <Route path='/' component={List} exact/>
             </Switch>
 

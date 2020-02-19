@@ -1,12 +1,12 @@
 {
     "development" : {
-        "username": "DB 유저 네임",
-        "password": "DB 비밀번호",
-        "database": "DB 이름",
-        "host": "DB HOST 이름",
-        "port": "DB PORT 번호",
-        "dialect": "DB 종류"
+        "username": "",
+        "password": "",
+        "database": "",
+        "host": "",
+        "port": "",
+        "dialect": ""
     },
 
-    "salt" : "솔트 설정"
+    "salt" : ""
 }
