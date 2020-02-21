@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './main.css';
 
+import { Link } from 'react-router-dom';
+
 import queryString from 'query-string';
 import { Search } from './index.js';
 
@@ -81,17 +83,19 @@ class list extends Component {
     
     return (
       <div className='List'>
-
         <div className='list_grid list_tit'>
           <div> 제목 </div>
           <div> 조회수 </div>
           <div className='acenter'> 날짜 </div>
         </div>
 
+        
           {list && list.length > 0 ? list.map( (el, key) => {
+            const view_url = '/view/' + el.board_id;
+
             return(
               <div className='list_grid list_data' key={key}>
-                <div> {el.title} </div>
+                <div> <Link to={view_url}> {el.title} </Link> </div>
                 <div> </div>
                 <div className='acenter'> {el.date.slice(0, 10)} </div>
               </div>
@@ -119,7 +123,6 @@ class list extends Component {
               </ul>
                 <Search 
                   search = {search}
-                  // search = {this.state.search}
                 />
             </div>
             <div> </div>

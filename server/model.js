@@ -33,7 +33,22 @@ module.exports = {
             Board.create({
                 title : body.title,
                 contents : body.contents,
-                date : now_date
+                date : now_date,
+                view_cnt : 0
+            })
+            .then(data => {
+                callback(true)
+            })
+            .catch(err => {
+                throw err;
+            })
+        }
+    },
+
+    update : {
+        view_cnt : (body, callback) => {
+            Board.update({ view_cnt : sequelize.literal('view_cnt + 1')}, {
+                where : { board_id : body.id }
             })
             .then(data => {
                 callback(true)
@@ -96,6 +111,18 @@ module.exports = {
             })
             .then(result => {
                 callback(result);
+            })
+        },
+
+        board_data : (body, callback) => {
+            Board.findAll({
+                where : { board_id : body.id }
+            })
+            .then(result => {
+                callback(result);
+            })
+            .catch(err => {
+                throw err;
             })
         }
     }

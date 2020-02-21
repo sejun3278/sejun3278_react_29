@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './main.css';
 
 import { Route, Link, Switch } from 'react-router-dom';
-import { List, Write } from './index.js'; 
+import { List, Write, View } from './index.js'; 
 
 import { Right_Write } from './right/index.js'; 
 
@@ -21,11 +21,11 @@ class main extends Component {
 
           <div>
             <Switch>
-              <Route path='/:data' component={List} />
               <Route path='/' component={List} exact/>
             </Switch>
 
             <Route path='/write' component={Write} />
+            <Route path='/view/:data' component={View} />
           </div>
 
           <div id='Mains-right'>
