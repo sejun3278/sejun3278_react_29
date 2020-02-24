@@ -9,6 +9,7 @@ const now_date = moment().format('YYYY-MM-DD HH:mm:ss');
 const {
     Admin,
     Board,
+    Category,
     Sequelize: { Op }
   } = require('./models');
 sequelize.query('SET NAMES utf8;');
@@ -58,8 +59,8 @@ module.exports = {
             })
         }
     },
-
     get : {
+
         board : (body, callback) => {
             let search = "%%";
 
@@ -74,7 +75,8 @@ module.exports = {
                     },
                     contents : {
                         [Op.like] : search
-                    }
+                    },
+                    cat_id : body.category
                 },
                     limit : (body.page * body.limit),
                     offset : (body.page - 1) * body.limit,
@@ -97,16 +99,13 @@ module.exports = {
     
             Board.count({
                 where : {
-
                     title : {
-
                         [Op.like] : search
-                        
                     },
-
                     contents : {
                         [Op.like] : search
-                    }
+                    },
+                    cat_id : body.category
                 }
             })
             .then(result => {
@@ -124,6 +123,12 @@ module.exports = {
             .catch(err => {
                 throw err;
             })
+        },
+
+        category : (callback) => {
+            Category.findAll()
+            .then(result => { callback(result); })
+            .catch(err => { throw err; })
         }
     }
     

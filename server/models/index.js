@@ -36,5 +36,15 @@ let sequelize = new Sequelize(
 
     db.Admin = require('./admin')(sequelize, Sequelize);
     db.Board = require('./board')(sequelize, Sequelize);
+    db.Category = require('./category')(sequelize, Sequelize);
+
+    db.Category.hasMany(db.Board, {
+      foreignKey: 'cat_id',
+      sourceKey : 'id'
+    });
+    db.Board.belongsTo(db.Category, {
+        foreignKey: 'cat_id',
+        targetKey : 'id'
+    });
     
 module.exports = db;

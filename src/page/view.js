@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './main.css';
 
 import axios from 'axios';
-import cookie from 'react-cookies'
 
 class view extends Component {
   constructor(props) {
@@ -45,7 +44,7 @@ class view extends Component {
     const { data, date } = this.state;
 
     return (
-        <div className='Write'>
+        <div className='Write' style={{ 'paddingLeft' : '0px', 'paddingRight' : '80px' }}>
           {data.data 
           ? <div>
 

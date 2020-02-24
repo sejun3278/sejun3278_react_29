@@ -28,24 +28,30 @@ class list extends Component {
   _getListData = async function() {
     const { limit } = this.state;
     const page = this._setPage();
-    
+
+    let { category } = this.props;
+    if(sessionStorage.getItem('category')) {
+      category = sessionStorage.getItem('category')
+    }
+
     let search = queryString.parse(this.props.location.search);
     if(search) {
       search = search.search;
     }
+    console.log(search)
 
     // Board 테이블 데이터 전체 수
     const total_cnt = await axios('/get/board_cnt', {
       method : 'POST',
       headers: new Headers(),
-      data : { search : search }
+      data : { search : search, category : category }
     });
 
     // 데이터 가져오기
     const total_list = await axios('/get/board', {
       method : 'POST',
       headers: new Headers(),
-      data : { limit : limit, page : page, search : search }
+      data : { limit : limit, page : page, search : search, category : category }
     })
 
     // 전체 페이지 수 구하기

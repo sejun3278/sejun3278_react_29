@@ -56,7 +56,6 @@ const hashing = require(path.join(__dirname, 'config', 'hashing.js'))
             expires: expires
           });
           
-          
           model.update.view_cnt(body, result => {
             if(result) {
               res.send(true);
@@ -91,6 +90,13 @@ const hashing = require(path.join(__dirname, 'config', 'hashing.js'))
         const body = req.body;
 
         model.get.board_data(body, data => {
+          res.send(data)
+        })
+      },
+
+      category : (req, res) => {
+
+        model.get.category(data => {
           res.send(data)
         })
       }
