@@ -5,8 +5,13 @@ const controller = require('./controller');
 router.post('/send/pw', controller.api.sendPw);
 
 router.post('/add/board', controller.add.board);
+router.post('/add/category', controller.add.category);
 
 router.post('/update/view_cnt', controller.update.view_cnt);
+
+router.post('/delete/category', controller.delete.category);
+
+router.post('/modify/category', controller.modify.category);
 
 router.get('/get/category', controller.get.category);
 

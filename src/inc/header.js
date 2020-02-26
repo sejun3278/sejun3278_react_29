@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import '../App.css';
 import axios from 'axios';
 
@@ -11,16 +11,9 @@ class header extends Component {
           visible : false,
           id : "",
           password : "",
-          login : false,
       }
   }
-
-  componentDidMount() {
-    if(sessionStorage.login) {
-      this.setState({ login : true })
-    }
-  }
-
+  
   _openModal = function() {
     this.setState({
         visible : true
@@ -73,8 +66,7 @@ class header extends Component {
       if(res.data) {
 
         if(res.data.suc) {
-          sessionStorage.setItem('login', true)
-          this.setState({ login : true })
+          this.props._login();
           this._closeModal();
 
           return alert('로그인 되었습니다.')
@@ -87,8 +79,7 @@ class header extends Component {
 
   _logout = function() {
     if(window.confirm('로그아웃 하시겠습니까?')) {
-      sessionStorage.removeItem('login')
-      this.setState({ login : false })
+      this.props._logout();
     }
   }
 
@@ -99,11 +90,13 @@ class header extends Component {
   }
 
   render() {
+    const { login } = this.props;
+
     return (
         <div className='header_grid'>
             <div className='acenter'> 
             
-              {this.state.login 
+              {login
                 ? <h5> <Link to='/write'> 포스트 작성 </Link> </h5>
                 : null
               }
@@ -115,7 +108,7 @@ class header extends Component {
             </div>
 
             <div className='acenter'> 
-            {this.state.login ? <h5 className='btn_cursor' onClick={() => this._logout()}> 관리자 로그아웃 </h5>
+            {login ? <h5 className='btn_cursor' onClick={() => this._logout()}> 관리자 로그아웃 </h5>
                               : <h5 className='btn_cursor' onClick={() => this._openModal()}> 관리자 로그인 </h5>
             }
 

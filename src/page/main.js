@@ -12,6 +12,7 @@ class main extends Component {
     super(props)
     this.state = {
       category : '',
+      category_change : false,
     }
   }
 
@@ -31,8 +32,13 @@ class main extends Component {
     }
   }
 
+   _changeState = () => {
+    this.setState({ category_change : true })
+  }
+
   render() {
-    const { _changeCatgory } = this;
+    const { _changeCatgory, _changeState } = this;
+    const { login } = this.props;
 
     return (
         <div className='Mains'>
@@ -40,7 +46,10 @@ class main extends Component {
             {/* 변경 전 <Route path='/' component={Category} exact/> */}
 
             <Route path='/' 
-                   render={props => <Category _changeCatgory={_changeCatgory} />} 
+                   render={props => <Category _changeCatgory={_changeCatgory} 
+                                              login = {login}
+                                              _changeState = {_changeState}
+                  />} 
                    exact
             />
           </div>

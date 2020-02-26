@@ -35,13 +35,30 @@ module.exports = {
                 title : body.title,
                 contents : body.contents,
                 date : now_date,
-                view_cnt : 0
+                view_cnt : 0,
+                cat_id : 0,
             })
             .then(data => {
                 callback(true)
             })
             .catch(err => {
                 throw err;
+            })
+        },
+
+        category : (body, callback) => {
+            Category.count({
+                where : { name : body.name }
+            })
+            .then(cnt => {
+                if(cnt > 0) {
+                    callback(false);
+                } else {
+                    Category.create({
+                        name : body.name
+                    })
+                    .then( () => { callback(true) })
+                }
             })
         }
     },
@@ -59,6 +76,45 @@ module.exports = {
             })
         }
     },
+
+    delete : {
+        category : (body, callback) => {
+            Category.destroy({
+                where : { id : body.id }
+            })
+            .then( () => {
+                Board.update({ cat_id : 0 }, {
+                    where : { cat_id : body.id }
+                })
+                .then( () => { callback(true) })
+                .catch(err => { throw err; })
+            })
+        }
+    },
+
+    modify : {
+        category : (body, callback) => {
+            console.log(body)
+            Category.count({
+                where : { name : body.name }
+            })
+            .then(cnt => {
+                console.log(cnt)
+                if(cnt > 0) {
+                    callback(false);
+                    
+                } else {
+                    Category.update({ name : body.name }, {
+                        where : { id : body.id }
+                    })
+                    .then( () => { callback(true) })
+                    .catch(err => { throw err; })
+                }
+            })
+        }
+    },
+
+
     get : {
 
         board : (body, callback) => {
@@ -67,7 +123,6 @@ module.exports = {
             if(body.search) {
                 search = '%' + body.search + '%';
             }
-            
             Board.findAll({
                 where : {
                     title : {

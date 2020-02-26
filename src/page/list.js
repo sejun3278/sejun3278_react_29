@@ -25,6 +25,14 @@ class list extends Component {
     this._setPage();
   }
 
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   _getListData = async function() {
     const { limit } = this.state;
     const page = this._setPage();
@@ -38,7 +46,6 @@ class list extends Component {
     if(search) {
       search = search.search;
     }
-    console.log(search)
 
     // Board 테이블 데이터 전체 수
     const total_cnt = await axios('/get/board_cnt', {
