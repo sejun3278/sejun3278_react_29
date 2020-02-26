@@ -1,12 +1,12 @@
 {
     "development" : {
-        "username": "root",
-        "password": "q1w2e3r4t5",
-        "database": "blog",
-        "host": "127.0.0.1",
-        "port": "3306",
-        "dialect": "mysql"
+        "username": "",
+        "password": "",
+        "database": "",
+        "host": "",
+        "port": "",
+        "dialect": ""
     },
 
-    "salt" : "sdf645r5w4je6f356sa41d123fn5re6w24jh123f532kj132a5s52nd412f31j"
+    "salt" : ""
 }
