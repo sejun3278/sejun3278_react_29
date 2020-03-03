@@ -3,12 +3,10 @@ import './main.css';
 
 
 class search extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     const { search } = this.props;
+    
     if(search) {
       document.getElementsByName('search')[0].value = search
     }

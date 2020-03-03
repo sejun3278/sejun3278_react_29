@@ -13,6 +13,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     if(sessionStorage.login) {
       this.setState({ login : true })
     }

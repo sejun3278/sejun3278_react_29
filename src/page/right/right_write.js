@@ -14,7 +14,8 @@ class right_write extends Component {
 
   _submitBoard = async function() {
     const title = document.getElementsByName('title')[0].value.trim();
-    const contents = document.getElementsByName('contents')[0].value.trim();
+  
+    const contents = this.props.contents;
 
     if(title === "") {
       return alert('제목을 입력해주세요.');

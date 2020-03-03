@@ -33,7 +33,7 @@ class view extends Component {
   }
 
   _addViewCnt = async function(board_id) {
-    const addView = await axios('/update/view_cnt', {
+    await axios('/update/view_cnt', {
       method : 'POST',
       headers: new Headers(),
       data : { id : board_id }
@@ -44,7 +44,7 @@ class view extends Component {
     const { data, date } = this.state;
 
     return (
-        <div className='Write' style={{ 'paddingLeft' : '0px', 'paddingRight' : '80px' }}>
+        <div className='Write'>
           {data.data 
           ? <div>
 
@@ -56,8 +56,9 @@ class view extends Component {
                 </div>
               </div>
               
-              <div>
-                <textarea id='content_txt' name='contents' defaultValue={data.data[0].contents} readOnly></textarea>
+              <div id='contents_div' 
+                   dangerouslySetInnerHTML={ { __html : data.data[0].contents }}
+              >
               </div>
             </div>
           : null}

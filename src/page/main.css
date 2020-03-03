@@ -1,6 +1,7 @@
 .Mains {
     display: grid;
     grid-template-columns: 19% 62% 19%;
+    min-height: 600px;
 }
 
 #Mains-left { border-right: solid 1px #aabbaa; }
@@ -11,7 +12,8 @@
     padding-left: 30px;
 }
 
-.Write div {
+/* .write div 수정 */
+.Write #Title {
     margin-top: 30px;
     margin-left: 50px;
 }
@@ -29,7 +31,7 @@
     width: 91%;
     resize: none;
     border: none;
-    height: 500px
+    min-height: 400px;
 }
 
 #content_txt:focus { outline : none; }
@@ -173,4 +175,14 @@
     margin-top: 10px;
     margin-left: 10px;
     cursor: pointer;
+}
+
+.CKEditor {
+    margin-top : 20px;
+    margin-left: 50px;
+    width: 86.3%;
+}
+
+.View {
+    padding: 50px 70px 0px 70px;
 }
