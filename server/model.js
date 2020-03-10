@@ -1,15 +1,9 @@
 const sequelize = require('./models').sequelize;
 
-var moment = require('moment');
-require('moment-timezone');
-moment.tz.setDefault("Asia/Seoul");
-
-const now_date = moment().format('YYYY-MM-DD HH:mm:ss');
-
 const {
-    Admin,
     Board,
     Category,
+    User,
     Sequelize: { Op }
   } = require('./models');
 sequelize.query('SET NAMES utf8;');
@@ -17,8 +11,8 @@ sequelize.query('SET NAMES utf8;');
 module.exports = {
     api : {
         searchInfo : (body, hash, callback) => {
-            Admin.findAll({
-                where : { [Op.and]: [{ user_id : body.id, password : hash }] }
+            User.findAll({
+                where : { [Op.and]: [{ id : body.id, password : hash }] }
             })
             .then(data => {
                 callback(data)
@@ -58,6 +52,30 @@ module.exports = {
                         name : body.name
                     })
                     .then( () => { callback(true) })
+                }
+            })
+        },
+
+        user : (body, hash_pw, now_date, callback) => {
+            
+            User.count({
+                where : { id : body.id }
+            })
+            .then(cnt => {
+                if(cnt > 0) {
+                    callback(false);
+                } else {
+                    User.create({
+                        admin : 'N',
+                        id : body.id,
+                        password : hash_pw,
+                        name : body.name,
+                        birthday : body.birthday,
+                        sex : body.sex,
+                        email : body.email,
+                        signup_date : now_date
+                    })
+                    .then( () => callback(true) );
                 }
             })
         }

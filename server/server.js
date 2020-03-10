@@ -18,6 +18,13 @@ app.use(cors());
 
 app.use('/', router);
 
+const session = require('express-session')
+app.use(session({
+	secret:'keyboard cat',
+	resave:false,
+	saveUninitialize:true
+}));
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);

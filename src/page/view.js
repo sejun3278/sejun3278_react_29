@@ -44,7 +44,7 @@ class view extends Component {
     const { data, date } = this.state;
 
     return (
-        <div className='Write'>
+        <div className='Write View'>
           {data.data 
           ? <div>
 
@@ -59,6 +59,12 @@ class view extends Component {
               <div id='contents_div' 
                    dangerouslySetInnerHTML={ { __html : data.data[0].contents }}
               >
+              </div>
+
+              <div className='Like'>
+                <div/>
+                <div> 123 </div>
+                <div/>
               </div>
             </div>
           : null}

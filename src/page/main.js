@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './main.css';
 
 import { Route, Switch } from 'react-router-dom';
-import { List, Write, View } from './index.js'; 
+import { List, Write, View, Signup } from './index.js'; 
 
 import { Right_Write } from './right/index.js'; 
 import { Category } from './left/index.js'; 
@@ -46,7 +46,7 @@ class main extends Component {
   render() {
     const { _changeCatgory, _changeState, _getContents } = this;
     const { contents } = this.state;
-    const { login } = this.props;
+    const { login, admin, user_ip } = this.props;
 
     return (
         <div className='Mains'>
@@ -56,6 +56,8 @@ class main extends Component {
             <Category _changeCatgory={_changeCatgory} 
                       login = {login}
                       _changeState = {_changeState}
+                      admin = {admin}
+                      user_ip = {user_ip}
             exact />
           </div>
 
@@ -66,11 +68,14 @@ class main extends Component {
                      exact/>
             </Switch>
 
-
             <Route path='/write' 
                    component={this._withProps(Write, { 
                      _getContents : _getContents, 
                      contents : contents })} />
+
+            <Route path='/signup' 
+                   component={Signup}
+            />
                    
             <Route path='/view/:data' component={View} />
           </div>

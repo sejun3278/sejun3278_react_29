@@ -186,3 +186,63 @@
 .View {
     padding: 50px 70px 0px 70px;
 }
+
+.Like {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    margin-top: 150px;
+}
+
+.btn_list {
+    list-style : none;
+    width: 80%;
+}
+
+.btn_list li {
+    float: left;
+    margin-right: 50px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#signup_title {
+    color: #ababab;
+    position: absolute;
+    margin-left: 50px;
+    margin-top: 40px
+}
+
+.Signup {
+    padding: 70px 0px 0px 0%;
+    display: grid;
+    grid-template-columns: 50% auto;
+}
+
+.Signup div {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.Signup div input { padding: 3px; }
+
+input[name=signup_birthday] { width: 80px; }
+input[name=signup_sex] { width: 10px; margin-left: 5px;}
+input[name=signup_email] { width : 120px }
+select[name=signup_email_select] { padding: 3px; margin-left: 5px; }
+input[name=sigunup_submit] { 
+    margin : 13% 54% 0% 46%; 
+    padding: 5px 10px 5px 10px;
+    border-radius: 2px;
+    border: solid 1px #ababab;
+    background-color: white; 
+    cursor: pointer;
+}
+input[name=signup_email_write] {
+    padding: 3px;
+    position: absolute;
+    margin-top: -30px;
+    margin-left: 27px;
+    width: 10%;
+}
+
+#signup_section { border-left: solid 1px #ababab; }

@@ -55,18 +55,16 @@ class header extends Component {
 
     const obj = { id : id, password : password }
     const res = await axios('/send/pw', {
-
-      method : 'POST',
-
-      data : obj,
-      
-      headers: new Headers()
+        method : 'POST',
+        data : obj,
+        headers: new Headers()
       })
 
       if(res.data) {
 
         if(res.data.suc) {
-          this.props._login();
+
+          this.props._login(res.data);
           this._closeModal();
 
           return alert('로그인 되었습니다.')
@@ -90,13 +88,13 @@ class header extends Component {
   }
 
   render() {
-    const { login } = this.props;
+    const { login, admin, user_ip } = this.props;
 
     return (
         <div className='header_grid'>
             <div className='acenter'> 
             
-              {login
+              {login && admin === 'Y' && user_ip === "192.168.0.3"
                 ? <h5> <Link to='/write'> 포스트 작성 </Link> </h5>
                 : null
               }
@@ -107,9 +105,10 @@ class header extends Component {
                 <h3 onClick={() => this._goHead()}> <Link className='link_tit' to='/'> Sejun's Blog </Link> </h3>
             </div>
 
-            <div className='acenter'> 
-            {login ? <h5 className='btn_cursor' onClick={() => this._logout()}> 관리자 로그아웃 </h5>
-                              : <h5 className='btn_cursor' onClick={() => this._openModal()}> 관리자 로그인 </h5>
+            <div className='acenter'>
+              <ul className='btn_list'>
+            {login ? <li className='btn_cursor' onClick={() => this._logout()}> 로그아웃 </li>
+                   : <li className='btn_cursor' onClick={() => this._openModal()}> 로그인 </li>
             }
 
                 <Modal visible={this.state.visible} 
@@ -118,16 +117,16 @@ class header extends Component {
                        onClickAway={() => this._closeModal()}
                 >
                   <div>
-                    <h4 className='acenter login_tit'> 관리자 로그인 </h4>
+                    <h4 className='acenter login_tit'> 로그인 </h4>
                     <form>
                     <div className='login_div'>
                       <div className='login_input_div'>
-                        <p> 관리자 ID </p>
+                        <p> ID </p>
                         <input type='text' name='id' onChange={() => this._changeID()} autoComplete="off"/>
                       </div>
 
                       <div className='login_input_div' style={{ 'marginTop' : '40px'}}>
-                        <p> 관리자 Password </p>
+                        <p> Password </p>
                         <input type='password' name='password' onChange={() => this._changePW()}/>
                       </div>
 
@@ -139,6 +138,12 @@ class header extends Component {
                     </form>
                   </div>
                 </Modal>
+
+              {!login
+                ? <li> <Link to='/signup'> 회원가입 </Link> </li>
+                : null
+              }
+                </ul>
             </div>
         </div>
     );

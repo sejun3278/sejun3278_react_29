@@ -6,24 +6,35 @@ const salt = require(path.join(__dirname, 'config', 'db.json'))
 
 const hashing = require(path.join(__dirname, 'config', 'hashing.js'))
 
+const moment = require('moment');
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
+
+const now_date = moment().format('YYYY-MM-DD HH:mm:ss');
+
+// 사용자 아이피 가져오기
+const user_ip = require("ip");
+
   module.exports = {
     needs: () => upload,
     api : {
         sendPw : (req, res) => {
+
           const body = req.body;
           const hash = hashing.enc(body.id, body.password, salt)
-          
+
           model.api.searchInfo(body, hash, result => {
+          
             var obj = {};
             if(result[0]) {
-                obj['suc'] = true;
+                obj['suc'] = result[0].dataValues;
                 obj['msg'] = '로그인 성공';
+                obj['ip'] = user_ip.address();
 
               } else {
                 obj['suc'] = false;
                 obj['msg'] = '로그인 실패';
               }
-              
               res.send(obj);
           })
         },
@@ -55,6 +66,16 @@ const hashing = require(path.join(__dirname, 'config', 'hashing.js'))
             }
           
           res.send(obj)
+        })
+      },
+
+      user : (req, res) => {
+        const body = req.body;
+
+        const hash_pw = hashing.enc(body.id, body.password, salt);
+        
+        model.add.user(body, hash_pw, now_date, result => {
+          res.send(result);
         })
       }
     },
