@@ -5,9 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
+import { Route } from 'react-router-dom';
+
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <Route component={App} path='/'/>
     </BrowserRouter>, 
     document.getElementById('root')
 );

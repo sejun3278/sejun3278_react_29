@@ -17,16 +17,6 @@ class main extends Component {
     }
   }
 
-  _fixCategory = function() {
-    const category = sessionStorage.getItem('category');
-    this.setState({ category : category });
-  }
-
-  _changeCatgory = (target) => {
-    sessionStorage.setItem('category', target);
-    this.setState({ category : target });
-  }
-
   _withProps = function (Component, props) {
     return function(matchProps) {
       return <Component {...props} {...matchProps} />
@@ -44,9 +34,13 @@ class main extends Component {
   }
 
   render() {
-    const { _changeCatgory, _changeState, _getContents } = this;
+    const { _changeState, _getContents } = this;
     const { contents } = this.state;
-    const { login, admin, user_ip } = this.props;
+    const { 
+      login, admin, user_ip,
+      list_data, list_all_page, list_search, list_page, _changePage,
+      _changeCatgory
+    } = this.props;
 
     return (
         <div className='Mains'>
@@ -64,7 +58,14 @@ class main extends Component {
           <div>
             <Switch>
               <Route path='/' 
-                     component={this._withProps(List, { category : this.state.category })} 
+                     component={this._withProps(List, { 
+                       category : this.state.category,
+                       list_data : list_data,
+                       list_all_page : list_all_page,
+                       list_search : list_search,
+                       list_page : list_page,
+                       _changePage : _changePage
+                      })} 
                      exact/>
             </Switch>
 
