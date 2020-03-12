@@ -3,12 +3,16 @@ import React, { Component } from 'react';
 import Modal from 'react-awesome-modal';
 import axios from 'axios';
 
+import { Search_id, Search_pw } from './index.js'; 
+
 class login extends Component {
   constructor(props) {
     super(props);
     this.state = {
         id : "",
         password : "",
+        search_id_modal : false,
+        search_pw_modal : false,
     }
 }
 
@@ -61,12 +65,39 @@ class login extends Component {
       }
    }
 
+   _openSearchModal = function(target) {
+
+    if(target === 'id') {
+      this.setState({ search_id_modal : true })
+
+    } else if(target === 'pw') {
+      this.setState({ search_pw_modal : true })
+    }
+
+      return this.props._toggleModal(false)
+   }
+
+   _closeSearchModal = (target) => {
+
+      if(target === 'id') {
+        this.setState({ search_id_modal : false })
+
+      } else if(target === 'pw') {
+        this.setState({ search_pw_modal : false })
+      }
+   }
+
+   _backSearchModal = (target) => {
+
+    this._closeSearchModal(target)
+    return this.props._toggleModal(true)
+  }
 
   render() {
     return (
         <div>
             <Modal visible={this.props.login_modal} 
-                    width="400" height="360"
+                    width="400" height="400"
                     effect="fadeInDown" 
                     onClickAway={() => this.props._toggleModal(false)}
                 >
@@ -90,8 +121,36 @@ class login extends Component {
                       </div>
                     </div>
                     </form>
+
+                    <div className='search_user_info_div'>
+                      <div> 
+                        <b style={{ 'marginLeft' : '15px' }}
+                           onClick={() => this._openSearchModal('id')}
+                        > 
+                          아이디 찾기 
+                        </b> 
+                      </div>
+
+                      <div> 
+                        <b onClick={() => this._openSearchModal('pw')}> 
+                          비밀번호 찾기 
+                        </b> 
+                      </div>
+                    </div>
                   </div>
             </Modal>
+            <Search_id 
+              search_id_modal = {this.state.search_id_modal}
+              _closeSearchModal = {this._closeSearchModal}
+              _backSearchModal = {this._backSearchModal}
+              target = "id"
+            />
+            <Search_pw 
+              search_pw_modal = {this.state.search_pw_modal}
+              _closeSearchModal = {this._closeSearchModal}
+              _backSearchModal = {this._backSearchModal}
+              target = "pw"
+            />
         </div>
     );
   }

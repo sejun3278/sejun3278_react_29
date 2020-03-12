@@ -40,6 +40,16 @@ const user_ip = require("ip");
         },
     },
 
+    search : {
+      id : (req, res) => {
+        const body = req.body;
+
+        model.search.id(body, result => {
+          res.send(result)
+        })
+      }
+    },
+
     add : {
       board : (req, res) => {
         const body = req.body;
