@@ -15,6 +15,42 @@ const now_date = moment().format('YYYY-MM-DD HH:mm:ss');
 // 사용자 아이피 가져오기
 const user_ip = require("ip");
 
+// 이메일 보내기
+const nodeMailer = require('nodemailer');
+
+// 메일 발송 서비스에 대한 환경 설정
+const mailPoster = nodeMailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: /* 메일에 사용할 아이디 입력 */ example,
+    pass: /* 메일에 사용할 비밀번호 입력 */ example
+  }
+});
+
+// 메일을 받을 유저 설정
+const mailOpt = (user_data, title, contents) => {
+  const mailOptions = {
+    from: /* 메일에 사용할 아이디 입력 */ example,
+    to: user_data.email ,
+    subject: title,
+    text: contents
+  };
+
+  return mailOptions;
+}
+
+// 메일 전송
+const sendMail = (mailOption) => {
+  mailPoster.sendMail(mailOption, function(error, info){
+    if (error) {
+      console.log('에러 ' + error);
+    }
+    else {
+      console.log('전송 완료 ' + info.response);
+    }
+  });
+}
+
   module.exports = {
     needs: () => upload,
     api : {
@@ -46,6 +82,41 @@ const user_ip = require("ip");
 
         model.search.id(body, result => {
           res.send(result)
+        })
+      },
+
+      pw : (req, res) => {
+        const body = req.body;
+
+        model.search.pw(body, result => {
+          var res_data = {};
+
+          if(result[0]) {
+            const title = "비밀번호 조회 인증에 대한 6자리 숫자입니다.";
+            const contents = () => {
+              let number = "";
+              let random = 0;
+
+              for(let i = 0; i < 6; i++) {
+                random = Math.trunc(Math.random() * (9 - 0) + 0);
+                number += random;
+              }
+              
+              res_data['secret'] = number;
+              return "인증 칸에 아래의 숫자를 입력해주세요. \n" + number;
+            }
+
+            // 조회되는 데이터가 있는 경우 (메일 전송)
+            const mailOption = mailOpt(result[0].dataValues, title, contents());
+            sendMail(mailOption)
+
+            res_data['result'] = result;
+            res.send(res_data)
+
+          } else {
+            // 데이터가 조회되지 않을 경우
+            res.send(false)
+          }
         })
       }
     },
@@ -111,6 +182,15 @@ const user_ip = require("ip");
             }
           })
         }
+      },
+
+      password : (req, res) => {
+        const body = req.body;
+        const hash_pw = hashing.enc(body.user_id, body.change_password, salt);
+
+        model.update.password(body, hash_pw, result => {
+          res.send(true)
+        })
       }
     },
 

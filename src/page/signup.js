@@ -42,7 +42,6 @@ class Signup extends Component {
     const eng_check = /^[a-z]+[a-z0-9]{5,19}$/g;
     if(!eng_check.test(id)) {
       return alert('아이디는 영문자로 시작하는 6~20자여야만 합니다.')
-      
     }
     
     const pw_check = /^[a-z]+[a-z0-9]{5,19}$/g;

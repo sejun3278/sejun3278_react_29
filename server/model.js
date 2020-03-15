@@ -24,12 +24,24 @@ module.exports = {
     },
 
     search : {
+        
         id : (body, callback) => {
             User.findAll({
                 where: {
                     name : body.user_name,
                     birthday : body.user_birthday,
                     sex : body.user_sex,
+                    email : body.user_email
+                }
+            })
+            .then(result => { callback(result) })
+            .catch(err => { throw err; })
+        },
+
+        pw : (body, callback) => {
+            User.findAll({
+                where : {
+                    id : body.user_id,
                     email : body.user_email
                 }
             })
@@ -101,12 +113,16 @@ module.exports = {
             Board.update({ view_cnt : sequelize.literal('view_cnt + 1')}, {
                 where : { board_id : body.id }
             })
-            .then(data => {
-                callback(true)
+            .then(data => { callback(true) })
+            .catch(err => { throw err; })
+        },
+
+        password : (body, hash_pw, callback) => {
+            User.update({ password : hash_pw }, {
+                where : { id : body.user_id }
             })
-            .catch(err => {
-                throw err;
-            })
+            .then( () => { callback(true) })
+            .catch(err => { throw err; })
         }
     },
 
